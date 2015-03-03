@@ -1,13 +1,24 @@
-class Api::V1::VotersController
+class Api::V1::VotersController < ApplicationController
   before_action :restrict_access
+
+  def index
+    @voter = Voter.new(voter_params)
+
+    if @voter.save
+     render json: @voter
+    else
+     render json: "Invalid parameters"
+    end
+  end
 
   def create
     @voter = Voter.new(voter_params)
 
-   if @voter.save
+    if @voter.save
      render json: @voter
-   else
+    else
      render json: "Invalid parameters"
+    end
   end
 
   def show
@@ -24,6 +35,8 @@ class Api::V1::VotersController
       render json: "Invalid parameters"
     end
   end
+end
+
 
   # Never trust parameters from the scary internet, only allow the white list through.
   private def voter_params
@@ -35,5 +48,3 @@ class Api::V1::VotersController
       ApiKey.exists?(access_token: token)
     end
   end
-
-end
