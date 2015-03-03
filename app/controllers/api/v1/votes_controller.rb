@@ -1,5 +1,6 @@
 class Api::V1::VotesController
   protect_from_forgery with: :null_session
+  before_filter :restrict_access
 
   def index
 	  render json: Votes.all
@@ -20,4 +21,8 @@ class Api::V1::VotesController
     params.require(:vote).permit(:voter_id, :candidate_id)
   end
 
+  def restrict_access
+  authenticate_or_request_with_http_token do |token, options|
+    ApiKey.exists?(access_token: token)
+  end
 end
