@@ -1,6 +1,6 @@
 class Vote < ActiveRecord::Base
   belongs_to :candidate
   belongs_to :voter
-  validates :name, uniquness: true
+  validates :voter_id, presence: true
 
 end

@@ -1,5 +1,5 @@
 class Candidate < ActiveRecord::Base
   has_many :votes
-  validates :name, uniquness: true
+  validates :name, presence: true
 
 end
